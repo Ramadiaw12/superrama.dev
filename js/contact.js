@@ -7,9 +7,9 @@
 
 (function () {
   /* ── Config EmailJS ── */
-  const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";   // ex : service_xxxx
-  const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";  // ex : template_xxxx
-  const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";   // ex : aBcDeFgHiJkLmNop
+  const EMAILJS_SERVICE_ID  = "service_79i5m2o";   // ex : service_xxxx
+  const EMAILJS_TEMPLATE_ID = "template_i21phng";  // ex : template_xxxx
+  const EMAILJS_PUBLIC_KEY  = "ZiO9w7080Rjh5DQkh";   // ex : aBcDeFgHiJkLmNop
 
   /* ── Init EmailJS ── */
   if (typeof emailjs !== "undefined") {
