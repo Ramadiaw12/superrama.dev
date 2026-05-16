@@ -3,6 +3,38 @@
    ========================================== */
 
 (function () {
+  /* ── Burger menu ── */
+  const burgerBtn = document.getElementById('burgerBtn');
+  const navMenu   = document.getElementById('navMenu');
+
+  if (burgerBtn && navMenu) {
+    burgerBtn.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      burgerBtn.classList.toggle('open', isOpen);
+      burgerBtn.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Fermer au clic sur un lien
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        burgerBtn.classList.remove('open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Fermer avec Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+        burgerBtn.classList.remove('open');
+        burgerBtn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    });
+  }
   /* ── Active nav link on scroll ── */
   const sections    = document.querySelectorAll("section[id]");
   const navLinks    = document.querySelectorAll(".navbar ul li a");
