@@ -1227,3 +1227,194 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   .soft-skills-icons { flex-direction: column; align-items: center; }
   .soft-skill-mini { flex-direction: row; width: 100%; max-width: 240px; justify-content: flex-start; }
 }
+
+/* ==================== EXPERIENCE ==================== */
+#experience {
+  padding: 90px 9%;
+  background: #0d1017;
+}
+
+#experience .section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+#experience .section-header h1 {
+  font-size: 48px;
+  color: #7cf03d;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+}
+
+#experience .section-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 4px;
+  background: #7cf03d;
+  border-radius: 2px;
+}
+
+.timeline { display: flex; flex-direction: column; gap: 32px; max-width: 1000px; margin: 0 auto; }
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 36px;
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 180px;
+  top: 0; bottom: -32px;
+  width: 2px;
+  background: linear-gradient(to bottom, #7cf03d, rgba(124,240,61,0.1));
+}
+
+.timeline-item:last-child::before { display: none; }
+
+.timeline-left {
+  text-align: right;
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.timeline-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7cf03d;
+  letter-spacing: 0.5px;
+}
+
+.timeline-type {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--txt3, rgba(255,255,255,0.35));
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(124,240,61,0.2);
+}
+
+.freelance-badge {
+  color: #7cf03d;
+  border-color: #7cf03d;
+  background: rgba(124,240,61,0.1);
+}
+
+.timeline-right { position: relative; }
+
+.timeline-right::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 14px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #7cf03d;
+  box-shadow: 0 0 10px rgba(124,240,61,0.6);
+}
+
+.exp-card {
+  padding: 26px 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(124,240,61,0.18);
+  background: rgba(255,255,255,0.04);
+  transition: all .3s;
+}
+
+.exp-card:hover {
+  border-color: rgba(124,240,61,0.4);
+  background: rgba(124,240,61,0.04);
+  transform: translateX(4px);
+}
+
+.exp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.exp-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.exp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #7cf03d;
+  text-decoration: none;
+  border: 1px solid rgba(124,240,61,0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  transition: all .25s;
+}
+
+.exp-link:hover {
+  background: rgba(124,240,61,0.1);
+  border-color: #7cf03d;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.exp-bullets li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.7;
+}
+
+.exp-bullets li::before {
+  content: '▹';
+  color: #7cf03d;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.exp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 768px) {
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .timeline-item::before { display: none; }
+  .timeline-left { text-align: left; flex-direction: row; align-items: center; }
+  .timeline-right::before { display: none; }
+  #experience { padding: 60px 5%; }
+  #experience .section-header h1 { font-size: 36px; }
+}
+
+@media (max-width: 480px) {
+  #experience { padding: 40px 4%; }
+  .exp-card { padding: 18px; }
+  .exp-title { font-size: 16px; }
+}
