@@ -1,159 +1,178 @@
 /* ==========================================
-   carousel.js — Certifications carousel + modal
+   carousel.js — Infinite loop carousel + modal
    ========================================== */
 
 (function () {
-  /* ── État ── */
-  let currentIndex = 0;
-  let modalIndex = 0;
-  let autoplayTimer = null;
   const AUTOPLAY_DELAY = 4500;
 
-  /* ── Données des certifications (ordre identique aux slides HTML) ── */
   const certifications = [
-    {
-      src: "images/coursera4.jpeg",
-      alt: "Data Science Fundamentals - Coursera",
-      title: "Data Science Fundamentals"
-    },
-    {
-      src: "images/courseraTools.jpeg",
-      alt: "Data Science Tools - Coursera",
-      title: "Data Science Tools"
-    },
-    {
-      src: "images/courseraML.jpeg",
-      alt: "Machine Learning Basics - Coursera",
-      title: "Machine Learning Basics"
-    },
-    {
-      src: "images/coursera4.jpeg",
-      alt: "Data Science Methodology",
-      title: "Data Science Methodology"
-    },
-    {
-      src: "images/cisco.jpeg",
-      alt: "Cisco Networking Fundamentals",
-      title: "Cisco Networking"
-    },
-    {
-      src: "images/huawei.jpeg",
-      alt: "Cloud Computing - Huawei",
-      title: "Cloud Computing"
-    },
-    {
-      src: "images/gestion-projet.jpeg",
-      alt: "Gestion de projet - Google Coursera",
-      title: "Gestion de projet"
-    }
+    { src: "images/coursera4.jpeg",    alt: "Data Science Fundamentals", title: "Data Science Fundamentals" },
+    { src: "images/courseraTools.jpeg",alt: "Data Science Tools",         title: "Data Science Tools" },
+    { src: "images/courseraML.jpeg",   alt: "Machine Learning Basics",    title: "Machine Learning Basics" },
+    { src: "images/coursera4.jpeg",    alt: "Data Science Methodology",   title: "Data Science Methodology" },
+    { src: "images/cisco.jpeg",        alt: "Cisco Networking",           title: "Cisco Networking" },
+    { src: "images/huawei.jpeg",       alt: "Cloud Computing - Huawei",   title: "Cloud Computing" },
+    { src: "images/gestion-projet.jpeg",alt:"Gestion de projet",          title: "Gestion de projet" }
   ];
 
   const total = certifications.length;
+  let currentIndex = 0; // index réel (0 à total-1)
+  let isTransitioning = false;
+  let autoplayTimer = null;
+  let modalIndex = 0;
 
-  /* ── DOM refs ── */
-  const track          = document.getElementById("carouselTrack");
+  /* ── DOM ── */
+  const track        = document.getElementById("carouselTrack");
   const indicatorsWrap = document.getElementById("carouselIndicators");
-  const currentEl      = document.getElementById("currentSlide");
-  const totalEl        = document.getElementById("totalSlides");
-  const prevBtn        = document.getElementById("prevBtn");
-  const nextBtn        = document.getElementById("nextBtn");
-
-  const modal          = document.getElementById("certModal");
-  const modalImg       = document.getElementById("modalImage");
-  const modalCurrent   = document.getElementById("modalCurrentSlide");
-  const modalTotal     = document.getElementById("modalTotalSlides");
-  const modalClose     = document.getElementById("modalClose");
-  const modalPrev      = document.getElementById("modalPrev");
-  const modalNext      = document.getElementById("modalNext");
+  const currentEl    = document.getElementById("currentSlide");
+  const totalEl      = document.getElementById("totalSlides");
+  const prevBtn      = document.getElementById("prevBtn");
+  const nextBtn      = document.getElementById("nextBtn");
+  const modal        = document.getElementById("certModal");
+  const modalImg     = document.getElementById("modalImage");
+  const modalCurrent = document.getElementById("modalCurrentSlide");
+  const modalTotal   = document.getElementById("modalTotalSlides");
+  const modalClose   = document.getElementById("modalClose");
+  const modalPrev    = document.getElementById("modalPrev");
+  const modalNext    = document.getElementById("modalNext");
 
   /* ── Init ── */
   function init() {
     if (!track) return;
 
-    // Counters
     if (totalEl) totalEl.textContent = total;
     if (modalTotal) modalTotal.textContent = total;
 
-    // Build indicators
+    /* Cloner premier et dernier slide pour la boucle infinie */
+    const slides = track.querySelectorAll(".certification-slide");
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone  = slides[slides.length - 1].cloneNode(true);
+    firstClone.setAttribute("aria-hidden", "true");
+    lastClone.setAttribute("aria-hidden",  "true");
+    track.appendChild(firstClone);
+    track.insertBefore(lastClone, slides[0]);
+
+    /* Positionner sur le premier vrai slide (index 1 avec le clone) */
+    track.style.transition = "none";
+    track.style.transform  = `translateX(-${1 * 100}%)`;
+
+    /* Indicateurs */
     if (indicatorsWrap) {
       indicatorsWrap.innerHTML = "";
-      certifications.forEach((_, i) => {
+      for (let i = 0; i < total; i++) {
         const dot = document.createElement("div");
         dot.className = "indicator" + (i === 0 ? " active" : "");
-        dot.setAttribute("aria-label", `Slide ${i + 1}`);
-        dot.addEventListener("click", () => goToSlide(i));
+        dot.addEventListener("click", () => { goToSlide(i); resetAutoplay(); });
         indicatorsWrap.appendChild(dot);
-      });
+      }
     }
 
-    // Carousel navigation
-    if (prevBtn) prevBtn.addEventListener("click", () => { changeSlide(-1); resetAutoplay(); });
-    if (nextBtn) nextBtn.addEventListener("click", () => { changeSlide(1);  resetAutoplay(); });
+    /* Navigation */
+    if (prevBtn) prevBtn.addEventListener("click", () => { prev(); resetAutoplay(); });
+    if (nextBtn) nextBtn.addEventListener("click", () => { next(); resetAutoplay(); });
 
-    // Modal navigation
+    /* Modal */
     if (modalClose) modalClose.addEventListener("click", closeModal);
-    if (modalPrev)  modalPrev.addEventListener("click",  () => changeModalSlide(-1));
-    if (modalNext)  modalNext.addEventListener("click",  () => changeModalSlide(1));
+    if (modalPrev)  modalPrev.addEventListener("click", () => changeModalSlide(-1));
+    if (modalNext)  modalNext.addEventListener("click", () => changeModalSlide(1));
+    if (modal) modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
 
-    // Close modal on backdrop click
-    if (modal) {
-      modal.addEventListener("click", function (e) {
-        if (e.target === modal) closeModal();
-      });
-    }
-
-    // Keyboard support
-    document.addEventListener("keydown", function (e) {
+    /* Clavier */
+    document.addEventListener("keydown", e => {
       if (modal && modal.classList.contains("active")) {
         if (e.key === "ArrowLeft")  changeModalSlide(-1);
         if (e.key === "ArrowRight") changeModalSlide(1);
         if (e.key === "Escape")     closeModal();
       } else {
-        if (e.key === "ArrowLeft")  { changeSlide(-1); resetAutoplay(); }
-        if (e.key === "ArrowRight") { changeSlide(1);  resetAutoplay(); }
+        if (e.key === "ArrowLeft")  { prev(); resetAutoplay(); }
+        if (e.key === "ArrowRight") { next(); resetAutoplay(); }
       }
     });
 
-    // Touch/swipe support for carousel
+    /* Swipe tactile */
     let touchStartX = 0;
-    if (track) {
-      track.addEventListener("touchstart", e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
-      track.addEventListener("touchend",   e => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 40) { changeSlide(diff > 0 ? 1 : -1); resetAutoplay(); }
-      });
-    }
+    track.addEventListener("touchstart", e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    track.addEventListener("touchend", e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 40) { diff > 0 ? next() : prev(); resetAutoplay(); }
+    });
+
+    /* Fin de transition — gestion boucle infinie */
+    track.addEventListener("transitionend", () => {
+      const allSlides = track.querySelectorAll(".certification-slide");
+      const trackIndex = currentIndex + 1; // +1 car clone au début
+
+      /* Si on est sur le clone du dernier → sauter au vrai premier */
+      if (trackIndex >= allSlides.length - 1) {
+        track.style.transition = "none";
+        track.style.transform  = `translateX(-${1 * 100}%)`;
+        currentIndex = 0;
+      }
+      /* Si on est sur le clone du premier → sauter au vrai dernier */
+      else if (trackIndex <= 0) {
+        track.style.transition = "none";
+        track.style.transform  = `translateX(-${total * 100}%)`;
+        currentIndex = total - 1;
+      }
+
+      isTransitioning = false;
+      updateIndicators();
+      updateCounter();
+    });
 
     startAutoplay();
-    updateUI();
+    updateIndicators();
+    updateCounter();
   }
 
-  /* ── Carousel ── */
-  function changeSlide(dir) {
-    currentIndex = (currentIndex + dir + total) % total;
-    updateUI();
+  /* ── Navigation ── */
+  function slideTo(trackIndex) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    track.style.transition = "transform .5s cubic-bezier(.4,0,.2,1)";
+    track.style.transform  = `translateX(-${trackIndex * 100}%)`;
+  }
+
+  function next() {
+    currentIndex++;
+    if (currentIndex > total - 1) currentIndex = total; // va au clone du premier
+    slideTo(currentIndex + 1);
+    updateIndicators();
+    updateCounter();
+  }
+
+  function prev() {
+    currentIndex--;
+    if (currentIndex < 0) currentIndex = -1; // va au clone du dernier
+    slideTo(currentIndex + 1);
+    updateIndicators();
+    updateCounter();
   }
 
   function goToSlide(index) {
+    if (isTransitioning) return;
     currentIndex = index;
-    updateUI();
-    resetAutoplay();
+    slideTo(currentIndex + 1);
+    updateIndicators();
+    updateCounter();
   }
 
-  function updateUI() {
-    if (track) track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-    // Indicators
+  /* ── UI ── */
+  function updateIndicators() {
+    const realIndex = ((currentIndex % total) + total) % total;
     document.querySelectorAll(".indicator").forEach((dot, i) => {
-      dot.classList.toggle("active", i === currentIndex);
+      dot.classList.toggle("active", i === realIndex);
     });
+  }
 
-    if (currentEl) currentEl.textContent = currentIndex + 1;
+  function updateCounter() {
+    const realIndex = ((currentIndex % total) + total) % total;
+    if (currentEl) currentEl.textContent = realIndex + 1;
   }
 
   /* ── Autoplay ── */
   function startAutoplay() {
-    autoplayTimer = setInterval(() => changeSlide(1), AUTOPLAY_DELAY);
+    autoplayTimer = setInterval(next, AUTOPLAY_DELAY);
   }
 
   function resetAutoplay() {
@@ -168,7 +187,7 @@
     updateModal();
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
-    clearInterval(autoplayTimer); // pause autoplay while modal is open
+    clearInterval(autoplayTimer);
   }
 
   function closeModal() {
@@ -179,7 +198,7 @@
   }
 
   function changeModalSlide(dir) {
-    modalIndex = (modalIndex + dir + total) % total;
+    modalIndex = ((modalIndex + dir) % total + total) % total;
     updateModal();
   }
 
@@ -191,12 +210,10 @@
     if (modalCurrent) modalCurrent.textContent = modalIndex + 1;
   }
 
-  /* ── Expose globals needed by inline onclick in HTML ── */
+  /* ── Globals ── */
   window.openModal        = openModal;
   window.closeModal       = closeModal;
-  window.changeSlide      = changeSlide;
   window.changeModalSlide = changeModalSlide;
-  window.goToSlide        = goToSlide;
 
   /* ── Boot ── */
   if (document.readyState === "loading") {
