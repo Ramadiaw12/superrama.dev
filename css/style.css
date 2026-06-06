@@ -1278,66 +1278,96 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 }
 
 @media (max-width: 480px) {
-  .navbar { padding: 14px 4%; flex-wrap: wrap; gap: 8px; }
-  .navbar ul { gap: 10px; flex-wrap: wrap; }
-  .navbar ul li a { font-size: 12px; }
-  .home { padding: 70px 4% 40px; }
-  .home-info h1 {
-    font-size: 26px;
-    letter-spacing: -0.5px;
-    word-break: break-word;
+  /* ── Navbar : reste sur UNE ligne ── */
+  .navbar {
+    padding: 14px 5%;
+    flex-wrap: nowrap;
+    gap: 0;
+    justify-content: space-between;
+    align-items: center;
   }
+  .navbar .logo { font-size: 18px; }
+  .burger { display: flex; flex-shrink: 0; }
+
+  /* ── Home : assez d'espace sous la navbar ── */
+  .home {
+    padding: 90px 5% 40px;
+    text-align: center;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* ── Nom complet visible ── */
+  .home-info h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    word-break: normal;
+    white-space: normal;
+  }
+
+  /* ── "I'm a" + texte animé sur 2 lignes propres ── */
   .home-info h2 {
-    font-size: 17px;
-    height: 30px;
+    font-size: 16px;
+    height: auto;
+    min-height: 28px;
     overflow: visible;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 16px;
   }
   .home-info h2 span {
-    white-space: nowrap;
-    font-size: 17px;
-  }
-  .home-info p {
-    font-size: 14px;
-    text-align: left;
-    line-height: 1.7;
-  }
-  .home-img .img-box { width: 240px; height: 240px; }
-  .home-img .img-box::before,
-  .home-img .img-box::after { width: 278px; height: 278px; }
-  .certifications-carousel { padding: 0 44px; }
-  /* Boutons restent sur les côtés, taille réduite */
-  .prev-btn, .next-btn {
-    width: 36px; height: 36px;
     font-size: 16px;
+    white-space: nowrap;
+    display: inline-block;
   }
+
+  /* ── Paragraphe ── */
+  .home-info p {
+    font-size: 13.5px;
+    text-align: center;
+    line-height: 1.7;
+    margin: 12px auto 20px;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* ── Image ── */
+  .home-img .img-box { width: 200px; height: 200px; }
+  .home-img .img-box::before,
+  .home-img .img-box::after { width: 234px; height: 234px; }
+
+  /* ── Boutons ── */
+  .home-info .btn-sci {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .btn { padding: 11px 28px; font-size: 14px; }
+
+  /* ── Carousel ── */
+  .certifications-carousel { padding: 0 44px; }
+  .prev-btn, .next-btn { width: 36px; height: 36px; }
   .prev-btn { left: 0; }
   .next-btn { right: 0; }
-  /* Track en hauteur auto pour que tout soit visible */
   .carousel-track { height: auto; min-height: unset; }
-  .certification-slide {
-    padding: 16px 10px;
-    min-height: unset;
-    height: auto;
-  }
-  .certification-image {
-    height: 180px;
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 12px;
-  }
-  .certification-info {
-    width: 100%;
-    max-width: 100%;
-    padding: 12px 10px;
-  }
+  .certification-slide { padding: 16px 10px; min-height: unset; height: auto; }
+  .certification-image { height: 180px; width: 100%; max-width: 100%; margin-bottom: 12px; }
+  .certification-info { width: 100%; max-width: 100%; padding: 12px 10px; }
   .certification-title { font-size: 16px; margin-bottom: 6px; }
   .certification-desc { font-size: 13px; line-height: 1.5; }
-  /* Cacher nav-row sur mobile (les boutons restent dans le carousel) */
   .carousel-nav-row { display: none; }
+
+  /* ── Grilles ── */
   .skills-grid { grid-template-columns: repeat(2, 1fr); }
   #contact-form { padding: 22px 18px; }
   .soft-skills-icons { flex-direction: column; align-items: center; }
   .soft-skill-mini { flex-direction: row; width: 100%; max-width: 240px; justify-content: flex-start; }
+  #about, #portfolio, #projects, .skills, #contact { padding: 50px 5%; }
 }
 
 /* ==================== EXPERIENCE ==================== */
@@ -1533,14 +1563,20 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 
 /* ── 375px : petits mobiles (iPhone SE, Galaxy S) ── */
 @media (max-width: 375px) {
+  .navbar { padding: 12px 4%; }
+  .navbar .logo { font-size: 16px; }
+  .home { padding: 85px 4% 36px; }
   .home-info h1 {
-    font-size: 22px;
-    letter-spacing: -0.5px;
+    font-size: 21px;
+    letter-spacing: -0.3px;
   }
   .home-info h2 {
-    font-size: 15px;
-    height: 26px;
+    font-size: 14px;
+    min-height: 24px;
   }
-  .home-info h2 span { font-size: 15px; }
+  .home-info h2 span { font-size: 14px; }
   .home-info p { font-size: 13px; }
+  .home-img .img-box { width: 180px; height: 180px; }
+  .home-img .img-box::before,
+  .home-img .img-box::after { width: 210px; height: 210px; }
 }
