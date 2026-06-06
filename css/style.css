@@ -1,4 +1,5 @@
 /* ==================== BASE ==================== */
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -144,22 +145,21 @@ a {
   position: relative;
   display: inline-block;
   color: transparent;
-  -webkit-text-stroke: .7px #7cf03d;
-  animation: display-text 8s linear infinite;
-  animation-delay: calc(-4s * var(--i));
+  -webkit-text-stroke: 0.7px #7cf03d;
   white-space: nowrap;
 }
 
 .home-info h2 span::before {
   content: attr(data-text);
   position: absolute;
+  top: 0;
   left: 0;
   width: 0;
-  border-right: 2px solid #7cf03d;
   color: #7cf03d;
-  white-space: nowrap;
+  border-right: 2px solid #7cf03d;
   overflow: hidden;
-  animation: fill-text 4s linear infinite;
+  white-space: nowrap;
+  animation: typing 3s steps(26) infinite;
 }
 
 .home-info p {
@@ -1195,9 +1195,19 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 /* ==================== ANIMATIONS ==================== */
 @keyframes show-content { 100% { visibility: visible; opacity: 1; } }
 @keyframes display-text { 25%, 100% { display: none; } }
-@keyframes fill-text {
-  10%, 100% { width: 0; }
-  70%, 90% { width: 100%; }
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+
+  40%,
+  70% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+  }
 }
 @keyframes rotate-border { 100% { transform: rotate(360deg); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -1278,7 +1288,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 }
 
 @media (max-width: 480px) {
-  /* ── Navbar : reste sur UNE ligne ── */
+  /* Navbar : reste sur UNE ligne */
   .navbar {
     padding: 14px 5%;
     flex-wrap: nowrap;
@@ -1289,7 +1299,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   .navbar .logo { font-size: 18px; }
   .burger { display: flex; flex-shrink: 0; }
 
-  /* ── Home : assez d'espace sous la navbar ── */
+  /*  Home : assez d'espace sous la navbar */
   .home {
     padding: 90px 5% 40px;
     text-align: center;
@@ -1297,7 +1307,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
     gap: 30px;
   }
 
-  /* ── Nom complet visible ── */
+  /* Nom complet visible */
   .home-info h1 {
     font-size: 24px;
     font-weight: 700;
@@ -1307,7 +1317,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
     white-space: normal;
   }
 
-  /* ── "I'm a" + texte animé sur 2 lignes propres ── */
+  /* "I'm a" + texte animé sur 2 lignes propres */
   .home-info h2 {
     font-size: 16px;
     height: auto;
@@ -1368,6 +1378,43 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   .soft-skills-icons { flex-direction: column; align-items: center; }
   .soft-skill-mini { flex-direction: row; width: 100%; max-width: 240px; justify-content: flex-start; }
   #about, #portfolio, #projects, .skills, #contact { padding: 50px 5%; }
+  
+  .portfolio-header h1 {
+  font-size: 26px;
+  padding: 0 10px;
+  word-break: break-word;
+}
+
+#contact {
+  padding: 50px 4%;
+  overflow-x: hidden;
+}
+
+.contact-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#contact-form {
+  width: 100%;
+  padding: 20px 16px;
+  box-sizing: border-box;
+}
+
+.interior {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contact-info-panel {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.contact-card {
+  width: 100%;
+  box-sizing: border-box;
+}
 }
 
 /* ==================== EXPERIENCE ==================== */
@@ -1559,6 +1606,14 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   #experience { padding: 40px 4%; }
   .exp-card { padding: 18px; }
   .exp-title { font-size: 16px; }
+
+  .skills-title {
+  font-size: 26px;
+  padding: 0 10px;
+  word-break: break-word;
+}
+
+
 }
 
 /* ── 375px : petits mobiles (iPhone SE, Galaxy S) ── */
@@ -1579,4 +1634,12 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   .home-img .img-box { width: 180px; height: 180px; }
   .home-img .img-box::before,
   .home-img .img-box::after { width: 210px; height: 210px; }
+
+  .portfolio-header h1 {
+  font-size: 22px;
+}
+
+.skills-title {
+  font-size: 22px;
+}
 }
