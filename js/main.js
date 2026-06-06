@@ -110,7 +110,6 @@
   });
 
   /* ── Typed animation fallback (if CSS only not working) ── */
-  // The CSS animation handles the typing effect. No JS needed.
 
   /* ── Event listeners ── */
   window.addEventListener("scroll", () => {
@@ -123,5 +122,62 @@
     updateActiveLink();
     handleNavbarScroll();
     initReveal();
+  });
+
+  /* ── Typewriter effect ── */
+  function initTypewriter() {
+    const el = document.getElementById("typewriter");
+    if (!el) return;
+ 
+    const texts = [
+      "AI Infrastructure Engineer"
+    ];
+ 
+    let textIndex  = 0;
+    let charIndex  = 0;
+    let isDeleting = false;
+    const typeSpeed   = 80;   // ms par caractère en écriture
+    const deleteSpeed = 40;   // ms par caractère en effacement
+    const pauseAfter  = 2000; // pause après écriture complète
+    const pauseBefore = 400;  // pause avant réécriture
+ 
+    function type() {
+      const current = texts[textIndex];
+ 
+      if (!isDeleting) {
+        // Écriture
+        charIndex++;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
+          // Texte complet → pause puis effacement
+          isDeleting = true;
+          setTimeout(type, pauseAfter);
+          return;
+        }
+        setTimeout(type, typeSpeed);
+      } else {
+        // Effacement
+        charIndex--;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === 0) {
+          // Vide → passer au suivant
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          setTimeout(type, pauseBefore);
+          return;
+        }
+        setTimeout(type, deleteSpeed);
+      }
+    }
+ 
+    type();
+  }
+ 
+  /* ── Boot ── */
+  document.addEventListener("DOMContentLoaded", () => {
+    updateActiveLink();
+    handleNavbarScroll();
+    initReveal();
+    initTypewriter();
   });
 })();
