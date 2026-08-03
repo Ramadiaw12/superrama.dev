@@ -40,6 +40,8 @@ Portfolio personnel entièrement statique (HTML/CSS/JS vanilla), sans framework 
 ---
 
 ## Structure du projet
+
+```
 portfolio/
 │
 ├── index.html              ← Page unique (SPA-like, toutes sections)
@@ -132,6 +134,19 @@ SVG inline     → logos non couverts (LangChain, LangGraph, MCP, N8N, Apache Sp
 
 ### En local
 
+```bash
+# Cloner le repo
+git clone https://github.com/Ramadiaw12/portfolio.git
+cd portfolio
+
+# Option 1 — ouvrir directement
+open index.html
+
+# Option 2 — serveur local (recommandé pour éviter les erreurs CORS)
+npx serve .
+# → http://localhost:3000
+```
+
 > Aucune installation npm, aucun build requis. Le projet est 100% statique.
 
 ### Vercel (recommandé — déploiement en 30 secondes)
@@ -139,14 +154,29 @@ SVG inline     → logos non couverts (LangChain, LangGraph, MCP, N8N, Apache Sp
 ```bash
 npm i -g vercel
 vercel
-# suivre les instructions URL générée automatiquement
+# suivre les instructions → URL générée automatiquement
 ```
+
+Ou glisser-déposer le dossier directement sur [vercel.com](https://vercel.com).
 
 ### Netlify
 
 Glisser-déposer le dossier sur [app.netlify.com](https://app.netlify.com) → URL type `superrama.netlify.app`.
 
 ### GitHub Pages
+
+```bash
+git init
+git add .
+git commit -m "🚀 initial commit — portfolio superrama"
+git branch -M main
+git remote add origin https://github.com/Ramadiaw12/portfolio.git
+git push -u origin main
+```
+
+Puis dans le repo GitHub : **Settings → Pages → Branch: main → / (root) → Save**
+
+URL générée : `https://ramadiaw12.github.io/portfolio`
 
 ---
 
@@ -158,9 +188,9 @@ Le formulaire utilise [EmailJS](https://emailjs.com) — envoi d'email sans back
 
 ```bash
 # 1. Créer un compte sur https://dashboard.emailjs.com
-# 2. Ajouter un Service (Gmail, Outlook...) copier le service_id
-# 3. Créer un Template  copier le template_id
-# 4. Récupérer la Public Key  Account  API Keys
+# 2. Ajouter un Service (Gmail, Outlook...) → copier le service_id
+# 3. Créer un Template → copier le template_id
+# 4. Récupérer la Public Key → Account → API Keys
 ```
 
 ### Dans `js/contact.js`, remplacer les 3 constantes :
@@ -168,7 +198,7 @@ Le formulaire utilise [EmailJS](https://emailjs.com) — envoi d'email sans back
 ```js
 const EMAILJS_SERVICE_ID  = "service_xxxx";    // ← ton service_id
 const EMAILJS_TEMPLATE_ID = "template_xxxx";   // ← ton template_id
-const EMAILJS_PUBLIC_KEY  = "aBc..........";   // ← ta public key
+const EMAILJS_PUBLIC_KEY  = "aBcDeFgHiJkL";   // ← ta public key
 ```
 
 ### Variables à utiliser dans le template EmailJS
@@ -189,6 +219,7 @@ const EMAILJS_PUBLIC_KEY  = "aBc..........";   // ← ta public key
 ### Changer la couleur accent
 
 ```bash
+# Remplace #7cf03d par ta couleur dans style.css
 sed -i 's/#7cf03d/YOUR_COLOR/g' css/style.css
 ```
 
