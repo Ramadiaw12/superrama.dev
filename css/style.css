@@ -1417,7 +1417,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 }
 }
 
-/* ==================== EXPERIENCE ==================== */
+/*  EXPERIENCE  */
 #experience {
   padding: 90px 9%;
   background: #0d1017;
@@ -1616,7 +1616,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 
 }
 
-/* ── 375px : petits mobiles (iPhone SE, Galaxy S) ── */
+/*  375px : petits mobiles (iPhone SE, Galaxy S)  */
 @media (max-width: 375px) {
   .navbar { padding: 12px 4%; }
   .navbar .logo { font-size: 16px; }
@@ -1644,14 +1644,14 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
 }
 }
 
-/* ===== Grid des projets ===== */
+/*  Grid des projets  */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 32px;
 }
 
-/* ===== Carte projet ===== */
+/*  Carte projet */
 .grid > .rounded-lg {
   display: flex;
   flex-direction: column;
@@ -1669,13 +1669,13 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   box-shadow: 0 12px 30px rgba(124, 240, 61, 0.12);
 }
 
-/* ===== Zone de preview (ratio fixe, peu importe le contenu) ===== */
+/* Zone de preview   */
 .project-preview {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;      /* toutes les previews auront la même proportion */
+  aspect-ratio: 16 / 9;     
   overflow: hidden;
-  background: #0e1117;      /* fond neutre si l'image ne remplit pas tout */
+  background: #0e1117;    
 }
 
 .project-preview img,
@@ -1736,7 +1736,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   white-space: nowrap;
 }
 
-/* ===== Liens (toujours collés en bas de carte) ===== */
+/*  Liens  */
 .project-links {
   margin-top: auto;
   display: flex;
