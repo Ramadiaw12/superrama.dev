@@ -1,0 +1,47 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161b22"/>
+      <stop offset="100%" stop-color="#0b0e13"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#9dfa6b"/>
+      <stop offset="100%" stop-color="#7cf03d"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Base tile, rounded square like a macOS app icon / terminal window -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="none" stroke="#7cf03d" stroke-opacity="0.18" stroke-width="6"/>
+
+  <!-- subtle scanline / terminal texture -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="#7cf03d" opacity="0.035"/>
+
+  <!-- Prompt chevron ">" -->
+  <g filter="url(#softGlow)">
+    <path d="M 66 176 L 160 256 L 66 336"
+          fill="none"
+          stroke="url(#glow)"
+          stroke-width="40"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+
+  <!-- Initials "rd" -->
+  <text x="196" y="302"
+        font-family="DejaVu Sans Mono, monospace"
+        font-weight="bold"
+        font-size="184"
+        fill="url(#glow)"
+        filter="url(#softGlow)">rd</text>
+
+  <!-- Cursor block "_" -->
+  <rect x="404" y="320" width="72" height="36" rx="7" fill="url(#glow)"/>
+</svg>
