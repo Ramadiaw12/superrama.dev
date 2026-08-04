@@ -1,7 +1,7 @@
 /* ==========================================
    contact.js — Form validation + EmailJS
    ==========================================
-  
+*/  
 
 (function () {
   /*  Config EmailJS */
@@ -112,7 +112,9 @@
           await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form);
           showAlert("success", "✅ Message envoyé avec succès ! Je vous répondrai sous 24 h.");
           form.reset();
-          document.querySelectorAll(".interior.success").forEach(el => el.classList.remove("success"));
+          document.querySelectorAll(".success").forEach(el => {
+            el.classList.remove("success");
+          });
         } else {
           /* Mode démo sans EmailJS configuré */
           await new Promise(res => setTimeout(res, 1400));
@@ -127,4 +129,5 @@
       }
     });
   }
+
 })();
