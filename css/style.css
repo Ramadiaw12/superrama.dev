@@ -1100,7 +1100,11 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   font-weight: 700;
   margin-bottom: 8px;
 }
-
+@media (max-width: 768px) {
+  .contact-info-panel h3 {
+    text-align: center;
+  }
+}
 .contact-cards { display: flex; flex-direction: column; gap: 16px; }
 
 .contact-card {
@@ -2249,8 +2253,11 @@ opacity:1;
   display: flex;
   gap: 8px;
 }
-.terminal-dots .dot { width: 8px; height: 12px; border-radius: 40%; }
-.traffic-lights .dot { width: 9px; height: 9px; border-radius: 50%; }
+.terminal-dots .dot { 
+  width: 10px; 
+  height: 10px; 
+  border-radius: 50%; 
+}
 
 
 .dot-red    { background: #ff5f57; }
@@ -2263,7 +2270,7 @@ opacity:1;
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 13px;
   color: rgba(255,255,255,0.4);
-  margin-right: 44px; /**/
+  margin-right: 44px;
 }
 
 /* le form garde son padding d'origine, save border/radius */
@@ -2277,6 +2284,9 @@ opacity:1;
 .form-label {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .form-label::before {
