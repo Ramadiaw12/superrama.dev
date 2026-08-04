@@ -3,7 +3,7 @@
    ========================================== */
 
 (function () {
-  /* ── Burger menu ── */
+  /*  Burger menu */
   const burgerBtn = document.getElementById('burgerBtn');
   const navMenu   = document.getElementById('navMenu');
 
@@ -35,7 +35,7 @@
       }
     });
   }
-  /* ── Active nav link on scroll ── */
+  /* Active nav link on scroll */
   const sections    = document.querySelectorAll("section[id]");
   const navLinks    = document.querySelectorAll(".navbar ul li a");
 
@@ -58,7 +58,7 @@
     });
   }
 
-  /* ── Navbar shrink on scroll ── */
+  /* Navbar shrink on scroll */
   const navbar = document.querySelector(".navbar");
 
   function handleNavbarScroll() {
@@ -72,7 +72,7 @@
     }
   }
 
-  /* ── Scroll reveal ── */
+  /* Scroll reveal */
   function initReveal() {
     const elements = document.querySelectorAll(
       ".education-item, .skill-card, .rounded-lg, .soft-skill-mini, .contact-card, .certification-slide"
@@ -96,7 +96,7 @@
     });
   }
 
-  /* ── Smooth scroll for all anchor links ── */
+  /* Smooth scroll for all anchor links */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener("click", function (e) {
       const target = document.querySelector(this.getAttribute("href"));
@@ -109,15 +109,15 @@
     });
   });
 
-  /* ── Typed animation fallback (if CSS only not working) ── */
+  /*  Typed animation fallback  */
 
-  /* ── Event listeners ── */
+  /*  Event listeners */
   window.addEventListener("scroll", () => {
     updateActiveLink();
     handleNavbarScroll();
   });
 
-  /* ── Boot ── */
+  /* Boot  */
   document.addEventListener("DOMContentLoaded", () => {
     updateActiveLink();
     handleNavbarScroll();

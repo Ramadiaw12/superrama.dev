@@ -1,29 +1,27 @@
 /* ==========================================
    contact.js — Form validation + EmailJS
    ==========================================
-   Remplace YOUR_SERVICE_ID, YOUR_TEMPLATE_ID et YOUR_PUBLIC_KEY
-   par tes identifiants sur https://dashboard.emailjs.com
-   ========================================== */
+  
 
 (function () {
-  /* ── Config EmailJS ── */
+  /*  Config EmailJS */
   const EMAILJS_SERVICE_ID  = "service_79i5m2o";   // ex : service_xxxx
   const EMAILJS_TEMPLATE_ID = "template_i21phng";  // ex : template_xxxx
   const EMAILJS_PUBLIC_KEY  = "ZiO9w7080Rjh5DQkh";   // ex : aBcDeFgHiJkLmNop
 
-  /* ── Init EmailJS ── */
+  /* Init EmailJS */
   if (typeof emailjs !== "undefined") {
     emailjs.init(EMAILJS_PUBLIC_KEY);
   }
 
-  /* ── DOM refs ── */
+  /* DOM refs */
   const form       = document.getElementById("contact-form");
   const submitBtn  = document.getElementById("submit-btn");
   const btnText    = submitBtn ? submitBtn.querySelector(".btn-text") : null;
   const btnLoader  = submitBtn ? submitBtn.querySelector(".btn-loader") : null;
   const alertBox   = document.getElementById("form-alert");
 
-  /* ── Validation helpers ── */
+  /* Validation helpers */
   const validators = {
     name    : v => v.trim().length >= 2               || "Le nom doit comporter au moins 2 caractères.",
     email   : v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || "Veuillez entrer un email valide.",
@@ -69,7 +67,7 @@
     return valid;
   }
 
-  /* ── Real-time validation ── */
+  /*  Real-time validation  */
   ["name", "email", "subject", "message"].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
@@ -81,7 +79,7 @@
     });
   });
 
-  /* ── Show alert ── */
+  /*  Show alert  */
   function showAlert(type, msg) {
     if (!alertBox) return;
     alertBox.className = `alert ${type}`;
@@ -92,7 +90,7 @@
     }
   }
 
-  /* ── Loading state ── */
+  /*  Loading state */
   function setLoading(loading) {
     if (!submitBtn) return;
     submitBtn.disabled = loading;
@@ -100,7 +98,7 @@
     if (btnLoader) btnLoader.style.display = loading ? "inline-block" : "none";
   }
 
-  /* ── Submit ── */
+  /*  Submit */
   if (form) {
     form.addEventListener("submit", async function (e) {
       e.preventDefault();

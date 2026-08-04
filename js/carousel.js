@@ -21,7 +21,7 @@
   let autoplayTimer = null;
   let modalIndex = 0;
 
-  /* ── DOM ── */
+  /*  DOM  */
   const track        = document.getElementById("carouselTrack");
   const indicatorsWrap = document.getElementById("carouselIndicators");
   const currentEl    = document.getElementById("currentSlide");
@@ -36,7 +36,7 @@
   const modalPrev    = document.getElementById("modalPrev");
   const modalNext    = document.getElementById("modalNext");
 
-  /* ── Init ── */
+  /*  Init  */
   function init() {
     if (!track) return;
 
@@ -125,7 +125,7 @@
     updateCounter();
   }
 
-  /* ── Navigation ── */
+  /* Navigation */
   function slideTo(trackIndex) {
     if (isTransitioning) return;
     isTransitioning = true;
@@ -157,7 +157,7 @@
     updateCounter();
   }
 
-  /* ── UI ── */
+  /*  UI  */
   function updateIndicators() {
     const realIndex = ((currentIndex % total) + total) % total;
     document.querySelectorAll(".indicator").forEach((dot, i) => {
@@ -170,7 +170,7 @@
     if (currentEl) currentEl.textContent = realIndex + 1;
   }
 
-  /* ── Autoplay ── */
+  /*  Autoplay  */
   function startAutoplay() {
     autoplayTimer = setInterval(next, AUTOPLAY_DELAY);
   }
@@ -180,7 +180,7 @@
     startAutoplay();
   }
 
-  /* ── Modal ── */
+  /*  Modal  */
   function openModal(index) {
     if (!modal || !modalImg) return;
     modalIndex = index;
@@ -210,12 +210,12 @@
     if (modalCurrent) modalCurrent.textContent = modalIndex + 1;
   }
 
-  /* ── Globals ── */
+  /* Globals */
   window.openModal        = openModal;
   window.closeModal       = closeModal;
   window.changeModalSlide = changeModalSlide;
 
-  /* ── Boot ── */
+  /* Boot  */
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
