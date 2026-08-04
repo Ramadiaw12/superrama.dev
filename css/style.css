@@ -2500,6 +2500,10 @@ terminal-window {
   .burger {
     display: flex;
   }
+  .burger {
+  position: relative;
+  z-index: 1001;   
+}
 
   #navMenu {
     position: absolute;
@@ -2530,3 +2534,89 @@ terminal-window {
 }
 
 /* CORRECTION */
+@media (max-width: 900px) {
+  .burger { display: flex; }
+
+  #navMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;           /* évite les soucis de barre d'adresse mobile */
+    background: rgba(13, 16, 23, 0.98);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4px;
+    z-index: 999;              /* juste sous la navbar (1000) */
+    list-style: none;
+    padding: 0 24px;
+    margin: 0;
+  }
+
+  #navMenu.open {
+    display: flex;
+  }
+
+  #navMenu li {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: menu-item-in .4s ease forwards;
+  }
+
+  #navMenu.open li:nth-child(1) { animation-delay: .05s; }
+  #navMenu.open li:nth-child(2) { animation-delay: .1s; }
+  #navMenu.open li:nth-child(3) { animation-delay: .15s; }
+  #navMenu.open li:nth-child(4) { animation-delay: .2s; }
+  #navMenu.open li:nth-child(5) { animation-delay: .25s; }
+  #navMenu.open li:nth-child(6) { animation-delay: .3s; }
+  #navMenu.open li:nth-child(7) { animation-delay: .35s; }
+
+  @keyframes menu-item-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  #navMenu li a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color .2s, padding-left .2s;
+  }
+
+  #navMenu {
+    counter-reset: menu-item;
+  }
+
+  #navMenu li a::before {
+    content: counter(menu-item);
+    counter-increment: menu-item;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(124,240,61,0.5);
+    font-family: monospace;
+    min-width: 22px;
+  }
+
+  #navMenu li a:hover,
+  #navMenu li.active a {
+    color: #7cf03d;
+    padding-left: 6px;
+  }
+
+  #navMenu li.active a::before {
+    content: "> ";
+    color: #7cf03d;
+  }
+}
