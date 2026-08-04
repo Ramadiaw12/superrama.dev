@@ -1032,6 +1032,10 @@ a {
   font-family: 'Poppins', sans-serif;
   transition: all .3s;
 }
+textarea.interior {
+  min-height: 100px;         /* remplace l'effet de rows="6" trop haut */
+  resize: vertical;
+}
 
 .interior:focus {
   outline: none;
@@ -2080,7 +2084,7 @@ textarea.interior { min-height: 140px; resize: vertical; line-height: 1.7; }
   }
 
   .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
   }
   
   .exp-body {
@@ -2225,7 +2229,7 @@ opacity:1;
 
 /* NEW FEATURES SUR FORMULAIRE */
 
-terminal-window {
+.terminal-window {
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(124,240,61,0.15);
@@ -2245,12 +2249,9 @@ terminal-window {
   display: flex;
   gap: 8px;
 }
+.terminal-dots .dot { width: 8px; height: 12px; border-radius: 40%; }
+.traffic-lights .dot { width: 9px; height: 9px; border-radius: 50%; }
 
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
 
 .dot-red    { background: #ff5f57; }
 .dot-yellow { background: #febc2e; }
@@ -2262,10 +2263,10 @@ terminal-window {
   font-family: 'JetBrains Mono', 'Courier New', monospace;
   font-size: 13px;
   color: rgba(255,255,255,0.4);
-  margin-right: 44px; /* compense la largeur des 3 dots pour un vrai centrage */
+  margin-right: 44px; /**/
 }
 
-/* le form garde son padding d'origine, juste sans son propre border/radius */
+/* le form garde son padding d'origine, save border/radius */
 #contact-form {
   border: none;
   border-radius: 0;
@@ -2297,7 +2298,7 @@ terminal-window {
   border-color: #7cf03d;
 }
 
-/* curseur clignotant après le dernier champ, pour l'effet terminal complet */
+/* curseur effet terminal complet */
 #contact-form::after {
   content: '';
   display: inline-block;
@@ -2619,4 +2620,70 @@ terminal-window {
     content: "> ";
     color: #7cf03d;
   }
+}
+
+/* NAVBAR  */
+/* Navbar container  plus compact  */
+.navbar-inner {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;      
+  box-sizing: border-box;
+}
+
+/*  Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;                
+  text-decoration: none;
+  padding: 5px 10px;        
+  border-radius: 6px;
+  background: #161b22;
+  border: 1px solid #1e2a1a;
+}
+
+.traffic-lights {
+  display: flex;
+  gap: 5px;                
+}
+
+.traffic-lights .dot {
+  width: 7px;                
+  height: 7px;
+  border-radius: 50%;
+}
+
+.logo-text {
+  font-family: monospace;
+  font-size: 0.8rem;         
+  font-weight: 600;
+  color: #7cf03d;
+  letter-spacing: 0.3px;
+}
+
+/* hemin shell devant le nom */
+.logo-path {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: rgba(124, 240, 61, 0.4);  
+}
+
+/*  Liens de nav resserrés  */
+#navMenu {
+  display: flex;
+  align-items: center;
+  gap: 2px;                 
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navMenu li a {
+  padding: 6px 13px;         
+  font-size: 0.8rem;         
 }
