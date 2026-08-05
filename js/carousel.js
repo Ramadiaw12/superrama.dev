@@ -102,13 +102,13 @@
       const allSlides = track.querySelectorAll(".certification-slide");
       const trackIndex = currentIndex + 1; // +1 car clone au début
 
-      /* Si on est sur le clone du dernier → sauter au vrai premier */
+      /* Si on est sur le clone du dernier  sauter au vrai premier */
       if (trackIndex >= allSlides.length - 1) {
         track.style.transition = "none";
         track.style.transform  = `translateX(-${1 * 100}%)`;
         currentIndex = 0;
       }
-      /* Si on est sur le clone du premier → sauter au vrai dernier */
+      /* Si on est sur le clone du premier  sauter au vrai dernier */
       else if (trackIndex <= 0) {
         track.style.transition = "none";
         track.style.transform  = `translateX(-${total * 100}%)`;
